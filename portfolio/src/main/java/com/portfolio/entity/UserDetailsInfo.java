@@ -2,7 +2,7 @@ package com.portfolio.entity;
 import jakarta.persistence.*;
 @Entity
 @Table(name = "user_details")
-public class UserDetails {
+public class UserDetailsInfo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +35,7 @@ public class UserDetails {
 	@Column(name = "date_of_birth", columnDefinition = "DATE")
 	private String dateOfBirth;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne()
 	@JoinColumn(name = "user_id")
 	private User user;
 	
@@ -112,13 +112,23 @@ public class UserDetails {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
+	}
 
 	@Override
 	public String toString() {
-		return "UserDetails [id=" + id + ", phoneNo=" + phoneNo + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", photo=" + photo + ", address=" + address + ", aboutMe=" + aboutMe + ", dateOfBirth=" + dateOfBirth
-				+ ", user=" + user + "]";
+		return "UserDetailsInfo [id=" + id + ", phoneNo=" + phoneNo + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", photo=" + photo + ", address=" + address + ", aboutMe=" + aboutMe + ", email=" + email
+				+ ", dateOfBirth=" + dateOfBirth + ", user=" + user + "]";
 	}
+
+	
 	
 	
 	

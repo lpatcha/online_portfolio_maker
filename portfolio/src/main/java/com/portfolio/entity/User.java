@@ -1,10 +1,14 @@
 package com.portfolio.entity;
+import java.util.Collection;
 import java.util.List;
-
 import jakarta.persistence.*;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements UserDetails{
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 @Column(name = "id")
@@ -16,8 +20,6 @@ private String userName;
 @Column(name = "password")
 private String password;
 
-@OneToOne(mappedBy = "user")
-private UserDetails userDetails;
 
 @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 private List<Education> education;
@@ -33,13 +35,53 @@ private List<SocialMedia> socialMedia;
 private List<UserToolsAndTechnologies> userToolsAndTechnologies;
 
 
-@OneToMany(mappedBy = "user")
+@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 private List<LeadInfo> leadInfo;
 
-
-public String getUserName() {
-	return userName;
+@Override
+public Collection<? extends GrantedAuthority> getAuthorities() {
+  return null;
 }
+
+public User() {
+	
+}
+
+public User(String email, String password) {
+	super();
+	this.userName = email;
+	this.password = password;
+}
+
+
+@Override
+public boolean isAccountNonExpired() {
+  return true;
+}
+
+@Override
+public boolean isAccountNonLocked() {
+  return true;
+}
+
+@Override
+public boolean isCredentialsNonExpired() {
+  return true;
+}
+
+@Override
+public boolean isEnabled() {
+  return true;
+}
+
+
+@Override
+public String getUsername() {
+	// TODO Auto-generated method stub
+	return this.userName;
+}
+
+
 
 
 public void setEmail(String userName) {
@@ -56,15 +98,6 @@ public void setPassword(String password) {
 	this.password = password;
 }
 
-
-public UserDetails getUserDetails() {
-	return userDetails;
-}
-
-
-public void setUserDetails(UserDetails userDetails) {
-	this.userDetails = userDetails;
-}
 
 
 public List<Education> getEducation() {
@@ -101,6 +134,10 @@ public List<UserToolsAndTechnologies> getUserToolsAndTechnologies() {
 	return userToolsAndTechnologies;
 }
 
+public int getId() {
+	return this.id;
+}
+
 
 public void setUserToolsAndTechnologies(List<UserToolsAndTechnologies> userToolsAndTechnologies) {
 	this.userToolsAndTechnologies = userToolsAndTechnologies;
@@ -117,20 +154,13 @@ public void setLeadInfo(List<LeadInfo> leadInfo) {
 }
 
 
-public User(String email, String password) {
-	super();
-	this.userName = email;
-	this.password = password;
-}
-
 
 @Override
 public String toString() {
-	return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", userDetails=" + userDetails
+	return "User [id=" + id + ", userName=" + userName + ", password=" + password 
 			+ ", education=" + education + ", projects=" + projects + ", socialMedia=" + socialMedia
 			+ ", userToolsAndTechnologies=" + userToolsAndTechnologies + ", leadInfo=" + leadInfo + "]";
 }
-
 
 
 

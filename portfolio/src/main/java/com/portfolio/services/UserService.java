@@ -1,10 +1,13 @@
 package com.portfolio.services;
 
-import com.portfolio.entity.UserDetails;
+import com.portfolio.dto.UserDetails;
+import com.portfolio.entity.UserDetailsInfo;
 
 public interface UserService {
 
 	
-	UserDetails saveUserDetails(UserDetails userDetails);
+	UserDetailsInfo saveUserDetails(UserDetailsInfo userDetails);
+	
+	UserDetailsInfo updateUserDetails(UserDetails userDetails);
 	
 }
