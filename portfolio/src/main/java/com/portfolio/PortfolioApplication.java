@@ -1,12 +1,13 @@
 package com.portfolio;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.portfolio.services.CategoryServiceImp;
+import com.portfolio.dao.UserDao;
+import com.portfolio.services.CategoryService;
+
 @SpringBootApplication
 public class PortfolioApplication {
 
@@ -15,13 +16,16 @@ public class PortfolioApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner commandLineRunner(CategoryServiceImp categoryService) {
+	public CommandLineRunner commandLineRunner( CategoryService categoryService, UserDao userDao) {
 		
 		
 		return runner -> {
-			System.out.println("application started");
-			//categoryService.findCategoryById(1);
 			
+			
+//			System.out.println("application started");
+//			System.out.println(userDao.findUserByUserName("lokeshp3098@gmail.com"));
+     		//System.out.println(categoryService.findCategoryById(1));
+//			
 			
 		};
 		

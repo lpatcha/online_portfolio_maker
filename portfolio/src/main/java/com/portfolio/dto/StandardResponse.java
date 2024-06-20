@@ -11,5 +11,12 @@ public class StandardResponse <T>{
 		this.statusCode = statusCode;
 	}
 	
+	public StandardResponse(String message, String statusCode) {
+		this.message = message;
+		this.statusCode = statusCode;
+		this.result = null;
+		
+	}
+	
 	
 }

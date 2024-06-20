@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.portfolio.dao.UserDao;
-import com.portfolio.entity.UserDetails;
+import com.portfolio.dto.UserDetails;
+import com.portfolio.entity.User;
+import com.portfolio.entity.UserDetailsInfo;
 
 @Service
 public class UserDetailsServiceImpl implements UserService{
@@ -12,8 +14,30 @@ public class UserDetailsServiceImpl implements UserService{
 	UserDao userDao;
 	
 	@Override
-	public UserDetails saveUserDetails(UserDetails userDetails) {
+	public UserDetailsInfo saveUserDetails(UserDetailsInfo userDetails) {
 		return userDao.saveUserDetails(userDetails);
+		
+	}
+	
+	@Override
+	public UserDetailsInfo updateUserDetails(UserDetails userDetails) {
+		UserDetailsInfo userDetailsInfo = new UserDetailsInfo();
+		
+		User user  = userDao.findUserById(userDetails.getUserId());
+	
+		userDetailsInfo.setAboutMe(userDetails.getAboutme());
+		userDetailsInfo.setAddress(userDetails.getAddress());
+		userDetailsInfo.setDateOfBirth(userDetails.getDateOfBirth());
+		userDetailsInfo.setEmail(userDetails.getEmail());
+		userDetailsInfo.setFirstName(userDetails.getFirstName());
+		userDetailsInfo.setLastName(userDetails.getLastName());
+		userDetailsInfo.setPhoneNo(userDetails.getPhoneNo());
+		userDetailsInfo.setPhoto(userDetails.getPhoto());
+		userDetailsInfo.setId(userDetails.getId());
+		userDetailsInfo.setUser(user);
+		
+		return userDao.updateUserDetails(userDetailsInfo);
+		
 		
 	}
 

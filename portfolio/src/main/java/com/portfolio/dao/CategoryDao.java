@@ -3,6 +3,7 @@ package com.portfolio.dao;
 import com.portfolio.entity.Categories;
 
 public interface CategoryDao {
-   Categories findById(int id);
-  
+	Categories findCategoryById(int id);
+	Categories createCategory(Categories category);
+	
 }
