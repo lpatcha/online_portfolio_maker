@@ -39,7 +39,10 @@ public class AuthConfig {
 	        .csrf(csrf -> csrf.disable())
 	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	        .authorizeHttpRequests(authorize -> authorize
-	        	.requestMatchers("/api/toolsAndTechnologies/*").permitAll())
+	        	.requestMatchers("/api/toolsAndTechnologies/*").permitAll()
+	        	.requestMatchers("/api/auth/*").permitAll()
+	        	.requestMatchers("/api/user/*").permitAll()
+	        	)
 	        	.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 	        .build();
 	  }
