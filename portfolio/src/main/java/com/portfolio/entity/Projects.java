@@ -24,10 +24,10 @@ public class Projects {
 	@Column(name = "role")
 	private String role;
 	
-	@Column(name = "start_date")
+	@Column(name = "start_date", columnDefinition = "DATE")
 	private Date startDate;
 	
-	@Column(name = "end_date")
+	@Column(name = "end_date",columnDefinition = "DATE")
 	private Date endDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -48,6 +48,10 @@ public class Projects {
 		this.endDate = endDate;
 		this.user = user;
 		this.rolesAndResponsibilites = rolesAndResponsibilites;
+	}
+
+	public Projects() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getId() {
