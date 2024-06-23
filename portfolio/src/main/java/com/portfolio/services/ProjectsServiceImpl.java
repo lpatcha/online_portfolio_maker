@@ -25,11 +25,13 @@ public class ProjectsServiceImpl implements ProjectsService {
 	@Override
 	@Transactional
 	public ProjectsDto saveUpdateProjectDetails(ProjectsDto projectDto) {
+		
 		// TODO Auto-generated method stub
 		User user = userDao.findUserById(projectDto.getUserId());
 		Projects project= new Projects();
 		
-		
+		project.setId(projectDto.getId());
+		System.out.println("is id comming:"+ projectDto.getId());	
 		
 		project.setClientName(projectDto.getClientName());
 		project.setLocation(projectDto.getLocation());
@@ -39,8 +41,10 @@ public class ProjectsServiceImpl implements ProjectsService {
 		project.setStartDate(projectDto.getStartDate());
 		project.setUser(user);
 		
+		
 		projectDto.setId( projectDao.SaveProject(project).getId());
 		
+			
 		return projectDto;
 		
 		 

@@ -13,4 +13,5 @@ public interface UserDao {
 	User findUserById(int id);
 	UserDetailsInfo updateUserDetails(UserDetailsInfo userDetailsInfo);
 	
+	
 }

@@ -28,6 +28,11 @@ String message;
 @JoinColumn(name = "user_id")
 private User user;
 
+public LeadInfo()
+{
+	
+};
+
 public LeadInfo(String email, String phoneNo, String firstName, String lastName, String message, User user) {
 	super();
 	this.email = email;

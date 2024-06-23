@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.portfolio.dao.UserDao;
 import com.portfolio.dto.UserDetails;
+import com.portfolio.entity.Projects;
 import com.portfolio.entity.User;
 import com.portfolio.entity.UserDetailsInfo;
 
