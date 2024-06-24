@@ -6,4 +6,6 @@ import com.portfolio.entity.User;
 
 public interface UserJpa extends JpaRepository<User, Long>{
 	User findById(int id);
+	User findByUserName(String userName);
+	
 }
