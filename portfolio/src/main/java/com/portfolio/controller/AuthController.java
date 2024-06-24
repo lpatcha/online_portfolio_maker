@@ -1,5 +1,4 @@
 package com.portfolio.controller;
-import com.portfolio.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +29,8 @@ public class AuthController {
 	 @Autowired
 	  private TokenProvider tokenService;
 	 
-	 
-	 @PostMapping("/signup")
+
+	 @PostMapping("signup")
 	  public ResponseEntity<StandardResponse> signUp(@RequestBody SignUpDto data) throws InvalidJwtException  {
 		/**
 		 * 
@@ -48,22 +47,32 @@ public class AuthController {
 	    return new ResponseEntity<StandardResponse>(standardResponse, HttpStatus.CREATED);
 	  }
 	 
-	 @PostMapping("/signin")
+	 @PostMapping("signin")
 	  public ResponseEntity<StandardResponse<JwtDto>> signIn(@RequestBody SignInDto data) {
+		 
 		
+		 
 		 var usernamePassword = new UsernamePasswordAuthenticationToken(data.getUserName(), data.getPassword());
 		 
 		 authenticationManager.authenticate(usernamePassword);
 		
 	    String accessToken = tokenService.generateAccessToken(data.getUserName());
 	    
+	    service.insertUpdateTokenActiveUsers(data.getUserName(), accessToken);
+	    
 	    
 	    StandardResponse<JwtDto> standardResponse = new StandardResponse<JwtDto>(new JwtDto(accessToken, data.getUserName()),"User signedIn Sucessfully", ResponseMessages.SUCCESS);
     
 	    return new ResponseEntity<StandardResponse<JwtDto>>(standardResponse, HttpStatus.OK);
 	
-	    
 	  }
+	 
+	 
+	 
+	 
+	 
+	
+
 
 	
 }

@@ -1,11 +1,18 @@
 package com.portfolio.services;
 
 import com.portfolio.dto.ToolsAndTechnologiesDto;
-import com.portfolio.entity.ToolsAndTechnologies;
+import com.portfolio.dto.UserToolsAndTechnologiesDto;
+
 
 public interface ToolsAndTechnologiesService{
 
-	ToolsAndTechnologies addToolsAndTechnologies(ToolsAndTechnologiesDto toolsAndTechnologiesDto);
+	ToolsAndTechnologiesDto addToolsAndTechnologies(ToolsAndTechnologiesDto toolsAndTechnologiesDto);
+	
+	ToolsAndTechnologiesDto updateToolsAndTechologies(ToolsAndTechnologiesDto toolsAndTechnologiesDto);
+	
+	UserToolsAndTechnologiesDto createAndUpdateUserToolsAndTechnologies(UserToolsAndTechnologiesDto userToolsAndTechnologiesDto, String type);
+	
+	int deleteUserToolsAndTechnologies(long id);
 	
 	
 }

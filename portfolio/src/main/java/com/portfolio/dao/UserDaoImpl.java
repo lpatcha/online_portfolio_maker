@@ -2,6 +2,8 @@ package com.portfolio.dao;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.portfolio.entity.Education;
 import com.portfolio.entity.User;
 import com.portfolio.entity.UserDetailsInfo;
 import jakarta.persistence.EntityManager;
@@ -13,7 +15,10 @@ public class UserDaoImpl implements UserDao{
 	@Autowired
 	private EntityManager entityManager;
 	
-
+	@Autowired
+	private EducationJpa educationJpa;
+	
+	@Autowired UserJpa userJpa;
 	
 
 	@Override
@@ -26,19 +31,21 @@ public class UserDaoImpl implements UserDao{
 	
 	
 	
-	@Override
-	public User findUserByUserName(String userName){
-		
-		TypedQuery<User> query = entityManager.createQuery(" from User u LEFT JOIN FETCH u.leadInfo  where u.userName= :userName", User.class);
-		
-		query.setParameter("userName", userName);
-		List<User> users = query.getResultList();
-	
-		if(users.size()>0) {
-			return query.getResultList().get(0);
-		}
-		return null;
-	}
+//	@Override
+//	public User findUserByUserName(String userName){
+//		
+//		
+//		
+//		TypedQuery<User> query = entityManager.createQuery(" from User u LEFT JOIN FETCH u.leadInfo  where u.userName= :userName", User.class);
+//		
+//		query.setParameter("userName", userName);
+//		List<User> users = query.getResultList();
+//	
+//		if(users.size()>0) {
+//			return query.getResultList().get(0);
+//		}
+//		return null;
+//	}
 	
 	@Override
 	@Transactional
@@ -57,26 +64,68 @@ public class UserDaoImpl implements UserDao{
 		return user;
 	}
 	
-	@Override
-	public User findUserById(int id) {
-		
-		TypedQuery<User> query = entityManager.createQuery(" from User u LEFT JOIN FETCH u.leadInfo  where u.id= :id", User.class);
-		
-		query.setParameter("id", id);
-		List<User> users = query.getResultList();
-		if(users.size()>0) {
-			return query.getResultList().get(0);
-		}
-		return null;
-		
-
-	}
 	
+	
+	
+	
+//	@Override
+//	public User findUserById(int id) {
+//		
+//		TypedQuery<User> query = entityManager.createQuery(" from User u LEFT JOIN FETCH u.leadInfo  where u.id= :id", User.class);
+//		
+//		query.setParameter("id", id);
+//		List<User> users = query.getResultList();
+//		if(users.size()>0) {
+//			return query.getResultList().get(0);
+//		}
+//		return null;
+//		
+//
+//	}
+//	
 	@Override
-	@Transactional
 	public UserDetailsInfo updateUserDetails(UserDetailsInfo userDetailsInfo) {
 		return entityManager.merge(userDetailsInfo);
 		
 	}
+
+
+
+	@Override
+	public Education createEducation(Education education) {
+		return educationJpa.save(education);
+	}
+
+
+
+	@Override
+	public int deleteEducationById(long id) {
+		educationJpa.deleteById(id);
+		return 1;
+	}
+
+
+
+	@Override
+	public User findUserByUserName(String userName) {
+		User user  = userJpa.findByUserName(userName);
+		return user;
+	}
+
+
+
+	@Override
+	public User findUserById(int id) {
+		User user = userJpa.findById(id);
+		return user;
+	}
+
+
+
+	@Override
+	public User updateUser(User user) {
+		return userJpa.save(user);
+	}
+	
 	
 }
