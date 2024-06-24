@@ -9,4 +9,7 @@ public interface CategoryService {
 	
 	Categories createCategory(CategoryDto categoryDto);
 	
+	Categories updateCategory(CategoryDto categoryDto);
+	
+	
 }

@@ -49,9 +49,9 @@ public class ToolsAndTechnologies {
 		this.category = category;
 	}
 
-	@Override
-	public String toString() {
-		return "ToolsAndTechnologies [id=" + id + ", name=" + name + ", category=" + category + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "ToolsAndTechnologies [id=" + id + ", name=" + name + ", category=" + category + "]";
+//	}
 
 }
