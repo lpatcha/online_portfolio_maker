@@ -18,4 +18,5 @@ public interface UserDao {
 	int deleteEducationById(long id);
 	User updateUser(User user);
 	
+	
 }
