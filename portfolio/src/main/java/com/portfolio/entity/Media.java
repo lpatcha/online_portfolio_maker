@@ -11,6 +11,10 @@ private int id;
 @Column(name = "name")
 private String name;
 
+public Media() {
+	
+}
+
 public Media(String name) {
 	super();
 	this.name = name;

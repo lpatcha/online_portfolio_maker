@@ -2,6 +2,9 @@ package com.portfolio.dao;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.portfolio.entity.Media;
+import com.portfolio.entity.SocialMedia;
 import com.portfolio.entity.User;
 import com.portfolio.entity.UserDetailsInfo;
 import jakarta.persistence.EntityManager;
@@ -13,7 +16,11 @@ public class UserDaoImpl implements UserDao{
 	@Autowired
 	private EntityManager entityManager;
 	
-
+	@Autowired
+	private MediaJpa mediaJpa;
+	
+	@Autowired
+	private SocialMediaJpa socialMediaJpa;
 	
 
 	@Override
@@ -78,5 +85,19 @@ public class UserDaoImpl implements UserDao{
 		return entityManager.merge(userDetailsInfo);
 		
 	}
-	
+
+
+
+	@Override
+	public Media findMediaById(int id) {
+		return mediaJpa.findById(id);
+		
+	}
+
+
+	@Override
+	public SocialMedia createSocialMedia(SocialMedia socialMedia) {
+		return socialMediaJpa.save(socialMedia);
+	}
+
 }

@@ -1,6 +1,8 @@
 package com.portfolio.dao;
 
 
+import com.portfolio.entity.Media;
+import com.portfolio.entity.SocialMedia;
 import com.portfolio.entity.User;
 import com.portfolio.entity.UserDetailsInfo;
 import com.portfolio.exceptionHandling.InvalidJwtException;
@@ -12,5 +14,8 @@ public interface UserDao {
 	User saveUser(User data, UserDetailsInfo userDetailsInfo) throws InvalidJwtException;
 	User findUserById(int id);
 	UserDetailsInfo updateUserDetails(UserDetailsInfo userDetailsInfo);
+	Media findMediaById(int id);
+	SocialMedia createSocialMedia(SocialMedia socialMedia);
+	
 	
 }
