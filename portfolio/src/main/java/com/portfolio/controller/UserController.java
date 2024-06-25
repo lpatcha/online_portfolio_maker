@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.portfolio.dto.SocialMediaDto;
+import com.portfolio.dto.StandardResponse;
+import com.portfolio.dto.UserDetails;
+import com.portfolio.entity.SocialMedia;
 import com.portfolio.dto.LeadInfoDto;
 import com.portfolio.dto.ProjectsDto;
 import com.portfolio.dto.EducationDto;
@@ -80,6 +84,27 @@ public class UserController {
 	
 	}
 	
+
+	@PostMapping("create_social_media")
+	public ResponseEntity<StandardResponse> createSocialMedia(@RequestBody SocialMediaDto socialMediaDto){
+		StandardResponse<SocialMedia> standardResponse = new StandardResponse<SocialMedia>(userService.createSocialMedia(socialMediaDto), ResponseMessages.INSERT_MESSAGE, ResponseMessages.INSERT_CODE);
+		return new ResponseEntity<>(standardResponse, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("update_social_media")
+	public ResponseEntity<StandardResponse> updateSocialMedia(@RequestBody SocialMediaDto socialMediaDto){
+		StandardResponse<SocialMedia> standardResponse = new StandardResponse<SocialMedia>(userService.createSocialMedia(socialMediaDto), ResponseMessages.UPDATE_MESSAGE, ResponseMessages.SUCCESS);
+		return new ResponseEntity<>(standardResponse, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("delete_social_media")
+	public ResponseEntity<StandardResponse> deleteSocialMedia(@RequestParam int id ){
+		userService.deleteSocialMedia(id);
+		StandardResponse standardResponse = new StandardResponse(ResponseMessages.DELETE_MESSAGE, ResponseMessages.DELETE);
+		
+		return new ResponseEntity<>(standardResponse, HttpStatus.OK);
+	}
+
 	@PostMapping("send_form")
 	public ResponseEntity<StandardResponse> sendForm(@RequestBody LeadInfoDto leadInfoDto) {
 		

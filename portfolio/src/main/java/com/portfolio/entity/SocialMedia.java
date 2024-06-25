@@ -21,7 +21,10 @@ public class SocialMedia {
 	@ManyToOne()
 	@JoinColumn(name = "link_id")
 	private Media media;
-
+	
+	public SocialMedia() {
+	}
+	
 
 	public SocialMedia(String link, User user, Media media) {
 		super();

@@ -40,12 +40,14 @@ public class AuthConfig {
 	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	        .authorizeHttpRequests(authorize -> authorize
 
+
 //	        	.requestMatchers("/api/toolsAndTechnologies/*").permitAll()
 //	        	.requestMatchers("/api/user/*").permitAll()
 	        	.requestMatchers("/api/auth/*").permitAll()
 	        	 .anyRequest().authenticated()
 
 	        	)
+
 	        	.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 	        .build();
 	  }

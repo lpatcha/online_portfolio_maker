@@ -1,9 +1,11 @@
 package com.portfolio.services;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.portfolio.dao.MediaJpa;
 import com.portfolio.dao.UserDao;
+import com.portfolio.dto.SocialMediaDto;
+import com.portfolio.entity.Media;
+import com.portfolio.entity.SocialMedia;
 import com.portfolio.dto.EducationDto;
 import com.portfolio.dto.UserDetails;
 import com.portfolio.entity.Projects;
@@ -17,6 +19,9 @@ import jakarta.transaction.Transactional;
 public class UserDetailsServiceImpl implements UserService{
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	MediaJpa mediaJpa;
 	
 	@Override
 	public UserDetailsInfo saveUserDetails(UserDetailsInfo userDetails) {
@@ -81,5 +86,25 @@ public class UserDetailsServiceImpl implements UserService{
 	}
 
 
+
+	@Override
+	public SocialMedia createSocialMedia(SocialMediaDto socialMediaDto) {
+		SocialMedia socialMedia = new SocialMedia();
+		socialMedia.setLink(socialMediaDto.getLink());
+		User user  = userDao.findUserById(socialMediaDto.getUserId());
+		socialMedia.setUser(user);
+		Media media = userDao.findMediaById(socialMediaDto.getMediaId());
+		socialMedia.setMedia(media);
+		socialMedia.setId(socialMediaDto.getId());
+		
+		return userDao.createSocialMedia(socialMedia);
+	}
+	
+	@Override
+	@Transactional
+	public void deleteSocialMedia(int id) {
+		mediaJpa.deleteById(id);
+		
+	}
 
 }
