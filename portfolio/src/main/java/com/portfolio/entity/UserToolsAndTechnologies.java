@@ -21,6 +21,10 @@ public class UserToolsAndTechnologies {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
+	
+	public UserToolsAndTechnologies() {
+		
+	}
 
 	public UserToolsAndTechnologies(int proficiencyRating, String description,
 			ToolsAndTechnologies toolsAndTechnologies, User user) {
@@ -29,6 +33,14 @@ public class UserToolsAndTechnologies {
 		this.description = description;
 		this.toolsAndTechnologies = toolsAndTechnologies;
 		this.user = user;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getProficiencyRating() {

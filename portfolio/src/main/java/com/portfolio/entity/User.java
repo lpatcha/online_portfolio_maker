@@ -21,22 +21,46 @@ private String userName;
 private String password;
 
 
-@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+@OneToMany(mappedBy = "user")
 private List<Education> education;
 
-@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+@OneToMany(mappedBy = "user")
 private List<Projects> projects;
 
-@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+@OneToMany(mappedBy = "user")
 private List<SocialMedia> socialMedia;
 
 
-@OneToMany(mappedBy = "user", fetch = FetchType.EAGER	)
+@OneToMany(mappedBy = "user")
 private List<UserToolsAndTechnologies> userToolsAndTechnologies;
 
 
-@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+@OneToMany(mappedBy = "user")
 private List<LeadInfo> leadInfo;
+
+@OneToMany(mappedBy = "user")
+private List<ActiveUsers> activeUsers;
+
+
+public String getUserName() {
+	return userName;
+}
+
+public void setUserName(String userName) {
+	this.userName = userName;
+}
+
+public void setId(int id) {
+	this.id = id;
+}
+
+public List<ActiveUsers> getActiveUsers() {
+	return activeUsers;
+}
+
+public void setActiveUsers(List<ActiveUsers> activeUsers) {
+	this.activeUsers = activeUsers;
+}
 
 @Override
 public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -153,14 +177,6 @@ public void setLeadInfo(List<LeadInfo> leadInfo) {
 	this.leadInfo = leadInfo;
 }
 
-
-
-@Override
-public String toString() {
-	return "User [id=" + id + ", userName=" + userName + ", password=" + password 
-			+ ", education=" + education + ", projects=" + projects + ", socialMedia=" + socialMedia
-			+ ", userToolsAndTechnologies=" + userToolsAndTechnologies + ", leadInfo=" + leadInfo + "]";
-}
 
 
 

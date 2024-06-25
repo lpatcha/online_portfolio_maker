@@ -39,9 +39,15 @@ public class AuthConfig {
 	        .csrf(csrf -> csrf.disable())
 	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	        .authorizeHttpRequests(authorize -> authorize
+
+
+//	        	.requestMatchers("/api/toolsAndTechnologies/*").permitAll()
+//	        	.requestMatchers("/api/user/*").permitAll()
 	        	.requestMatchers("/api/auth/*").permitAll()
-	        	.requestMatchers("/api/toolsAndTechnologies/*").permitAll()
-	        	.requestMatchers("/api/user/*").permitAll())
+	        	 .anyRequest().authenticated()
+
+	        	)
+
 	        	.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 	        .build();
 	  }
@@ -52,7 +58,7 @@ public class AuthConfig {
 	   
 	    AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
 	    authenticationManagerBuilder.userDetailsService(authServiceImpl).passwordEncoder(passwordEncoder());
-	    return authenticationManagerBuilder.build();
+	    return authenticationManagerBuilder.build();		
 	  }
 
 	  @Bean

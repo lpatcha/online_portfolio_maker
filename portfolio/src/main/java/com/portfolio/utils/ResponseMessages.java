@@ -11,5 +11,6 @@ public class ResponseMessages {
    public static final String DELETE_MESSAGE = "Record got deleted Successfully";
    public static final String UPDATE_MESSAGE = "Record got updated Successfully";
    public static final String INSERT_MESSAGE = "Record got inserted Successfully";
+   public static final String DELETE_MESSAGE = "Record got deleted Successfully";
    
 }

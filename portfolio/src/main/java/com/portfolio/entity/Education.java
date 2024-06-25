@@ -23,10 +23,10 @@ public class Education {
 	private String institutionName;
 
 	@Column(name = "cgpa")
-	private int cgpa;
+	private double cgpa;
 
 	@Column(name = "max_cgpa")
-	private int maxCgpa;
+	private double maxCgpa;
 
 	@Column(name = "start_date", columnDefinition = "DATE")
 	private Date startDate;
@@ -37,6 +37,10 @@ public class Education {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
+	
+	public Education() {
+		
+	}
 
 	public Education(String degree, String description, String institutionName, int cgpa, int maxCgpa, Date startDate,
 			Date endDate, User user) {
@@ -83,19 +87,19 @@ public class Education {
 		this.institutionName = institutionName;
 	}
 
-	public int getCgpa() {
+	public double getCgpa() {
 		return cgpa;
 	}
 
-	public void setCgpa(int cgpa) {
+	public void setCgpa(double cgpa) {
 		this.cgpa = cgpa;
 	}
 
-	public int getMaxCgpa() {
+	public double getMaxCgpa() {
 		return maxCgpa;
 	}
 
-	public void setMaxCgpa(int maxCgpa) {
+	public void setMaxCgpa(double maxCgpa) {
 		this.maxCgpa = maxCgpa;
 	}
 
@@ -123,11 +127,5 @@ public class Education {
 		this.user = user;
 	}
 
-	@Override
-	public String toString() {
-		return "Education [id=" + id + ", degree=" + degree + ", description=" + description + ", institutionName="
-				+ institutionName + ", cgpa=" + cgpa + ", maxCgpa=" + maxCgpa + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", user=" + user + "]";
-	}
 
 }

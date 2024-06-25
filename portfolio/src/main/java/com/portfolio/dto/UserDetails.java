@@ -1,8 +1,16 @@
 package com.portfolio.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class UserDetails {
+	
 	public int id;
+	
+	@NotNull
 	public int userId;
+	
+	@NotNull
+	
 	public String phoneNo;
 	public String firstName;
 	public String lastName;
