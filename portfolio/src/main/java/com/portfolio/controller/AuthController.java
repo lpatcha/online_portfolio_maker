@@ -49,30 +49,14 @@ public class AuthController {
 	 
 	 @PostMapping("signin")
 	  public ResponseEntity<StandardResponse<JwtDto>> signIn(@RequestBody SignInDto data) {
-		 
-		
-		 
 		 var usernamePassword = new UsernamePasswordAuthenticationToken(data.getUserName(), data.getPassword());
-		 
 		 authenticationManager.authenticate(usernamePassword);
-		
 	    String accessToken = tokenService.generateAccessToken(data.getUserName());
-	    
 	    service.insertUpdateTokenActiveUsers(data.getUserName(), accessToken);
-	    
-	    
 	    StandardResponse<JwtDto> standardResponse = new StandardResponse<JwtDto>(new JwtDto(accessToken, data.getUserName()),"User signedIn Sucessfully", ResponseMessages.SUCCESS);
-    
 	    return new ResponseEntity<StandardResponse<JwtDto>>(standardResponse, HttpStatus.OK);
-	
 	  }
 	 
-	 
-	 
-	 
-	 
-	
-
 
 	
 }

@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.portfolio.exceptionHandling.InvalidJwtException;
 import com.portfolio.services.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -26,16 +28,23 @@ public class SecurityFilter extends OncePerRequestFilter{
 	  
 	  @Override
 	  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-	      throws ServletException, IOException {
+	      throws ServletException, IOException{
 	    String token = this.recoverToken(request);
 	  
 	    if (token != null) {
-	      String userName = tokenService.validateToken(token);
-	      // todo exeption if no user is found in db
-	      UserDetails user  = authServiceImp.loadUserByUsername(userName);
-	      //todo don't store everything into signature only store which is necessary
-	      var authentication = new UsernamePasswordAuthenticationToken(user, null, null);
-	      SecurityContextHolder.getContext().setAuthentication(authentication);
+	      String userName;
+		try {
+			userName = tokenService.validateToken(token);
+			// todo exeption if no user is found in db
+		      UserDetails user  = authServiceImp.loadUserByUsername(userName);
+		      //todo don't store everything into signature only store which is necessary
+		      var authentication = new UsernamePasswordAuthenticationToken(user, null, null);
+		      SecurityContextHolder.getContext().setAuthentication(authentication);
+		} catch (InvalidJwtException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      
 	    }
 	    filterChain.doFilter(request, response);
 	  }

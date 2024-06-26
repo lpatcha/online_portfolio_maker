@@ -1,11 +1,22 @@
 package com.portfolio.dto;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 public class UserToolsAndTechnologiesDto {
 
+	@Min(value = 1, message = "id cannot be null", groups= OnUpdateGroupValidation.class)
+	@Max(value = 0, message = "id filed should not be present", groups = OnCreateGroupValidation.class)
 	int id;
+	
+	@Min(value = 1, message = "userid cannot be null")
 	int userId;
+	
+	@Max(10)
 	int proficiencyRating;
+	
 	String description;
+	
+	@Min(value = 1, message = "toolId cannot be null")
 	int toolId;
 	
 	public int getId() {

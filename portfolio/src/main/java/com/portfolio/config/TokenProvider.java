@@ -7,6 +7,7 @@ import com.portfolio.dao.ActiveUser;
 import com.portfolio.dao.UserDao;
 import com.portfolio.entity.ActiveUsers;
 import com.portfolio.entity.User;
+import com.portfolio.exceptionHandling.InvalidJwtException;
 import com.portfolio.utils.ResponseMessages;
 
 import jakarta.transaction.Transactional;
@@ -46,7 +47,7 @@ public String generateAccessToken(String userName) {
   }
 
 @Transactional
-public String validateToken(String token) {
+public String validateToken(String token) throws InvalidJwtException {
     try {
      
       String userName = decryptingToken(token);
@@ -55,10 +56,10 @@ public String validateToken(String token) {
     
     } catch (JWTVerificationException exception) {
     
-      //remove active user
+     
    
+    	throw new InvalidJwtException("Error while validating token");
     	
-      throw new JWTVerificationException("Error while validating token", exception);
     }
   }
 

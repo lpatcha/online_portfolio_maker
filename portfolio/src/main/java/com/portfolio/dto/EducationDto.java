@@ -1,17 +1,45 @@
 package com.portfolio.dto;
-
 import java.sql.Date;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 
 public class EducationDto {
+
+@NotBlank
  String degree;
+
  String description;
+ 
+ @NotBlank
  String institutionName;
+ 
+ @Max(4)
+ @Min(0)
  double cgpa;
+ 
+ @Max(4)
+ @Min((long) 0.0)
  double maxCgpa;
+ 
+ @Past
+ @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$")
  Date startDate;
+ 
+ @Past
+ @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$")
  Date endDate;
+ 
+ @Min(value = 1, message = "Userid cannot be null")
  int userId;
+ 
+
+ @Min(value = 1, message = "id cannot be null", groups = OnUpdateGroupValidation.class)
+ @Max(value = 0, message = "id should not be provided", groups = OnCreateGroupValidation.class)
  int id;
+ 
 public String getDegree() {
 	return degree;
 }
