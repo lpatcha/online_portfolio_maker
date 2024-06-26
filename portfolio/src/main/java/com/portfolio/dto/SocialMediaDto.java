@@ -1,10 +1,22 @@
 package com.portfolio.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 public class SocialMediaDto {
 	
+	@Min(value = 1, groups = OnUpdateGroupValidation.class)
+	@Max(value = 0, groups = OnCreateGroupValidation.class)
 	int id;
+	
+	@NotBlank
 	String link;
+	
+	@Min(value = 1, message = "userId cannot be null")
     int userId;
+	
+	@Min(value = 1, message = "MediaId cannot be null")
     int mediaId;
 	public int getId() {
 		return id;

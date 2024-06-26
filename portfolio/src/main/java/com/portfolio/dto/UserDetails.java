@@ -1,23 +1,40 @@
 package com.portfolio.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class UserDetails {
-	
+	@Min(value = 1, message = "id cannot be null")
 	public int id;
 	
-	@NotNull
+	@Min(value = 1, message = "userid cannot be null")
 	public int userId;
 	
 	@NotNull
-	
+	@Pattern(regexp = "^\\d{10,11}$")
 	public String phoneNo;
+	
+	@NotBlank
 	public String firstName;
+	
+	@NotBlank
 	public String lastName;
+	
 	public String photo;
+	
 	public String address;
+	
 	public String aboutme;
+	
+	@NotNull
+	@Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "Date of birth is not in valid format")
 	public String dateOfBirth;
+	
+	@Email
+	@NotBlank
 	public String email;
 	public String getPhoneNo() {
 		return phoneNo;
