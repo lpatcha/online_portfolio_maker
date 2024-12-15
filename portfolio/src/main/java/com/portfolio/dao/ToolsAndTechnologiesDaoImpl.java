@@ -3,6 +3,7 @@ package com.portfolio.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.portfolio.dto.ToolsAndTechnologiesDto;
 import com.portfolio.entity.ToolsAndTechnologies;
 import com.portfolio.entity.UserToolsAndTechnologies;
 
@@ -18,9 +19,9 @@ public class ToolsAndTechnologiesDaoImpl implements ToolsAndTechnologiesDao{
 	@Autowired
 	UserToolsAndTechnologiesDaoJpa userToolsAndTechnologiesDaoJpa;
 	
+	
 
 	@Override
-	@Transactional
 	public ToolsAndTechnologies createToolsAndTechnologies(ToolsAndTechnologies toolsAndTechnologies) {
 		
 		return toolsAndTechnologiesJpa.save(toolsAndTechnologies);
@@ -50,11 +51,7 @@ public class ToolsAndTechnologiesDaoImpl implements ToolsAndTechnologiesDao{
 		return 1;
 	}
 
-	
 
-
-	
-	
 	
 
 }

@@ -28,8 +28,4 @@ public class ProjectsDaoImpl implements ProjectsDao {
 		return projectsJpa.findById(id);
 	}
 
-
-	
-	
-
 }

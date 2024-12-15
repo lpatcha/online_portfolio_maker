@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public class UserDetails {
+public class UserDetailsDto {
 	@Min(value = 1, message = "id cannot be null")
 	public int id;
 	

@@ -1,7 +1,5 @@
 package com.portfolio.controller;
-
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.dto.SocialMediaDto;
 import com.portfolio.dto.StandardResponse;
-import com.portfolio.dto.UserDetails;
+import com.portfolio.dto.UserDetailsDto;
 import com.portfolio.entity.SocialMedia;
 import com.portfolio.dto.LeadInfoDto;
 import com.portfolio.dto.OnCreateGroupValidation;
@@ -26,20 +24,27 @@ import com.portfolio.dto.ProjectsDto;
 import com.portfolio.dto.CompareStringDto;
 import com.portfolio.dto.DateRangeDto;
 import com.portfolio.dto.EducationDto;
+
 import com.portfolio.dto.ResetPasswordDto;
+import com.portfolio.dto.RolesAndResponsibilitesDto;
 import com.portfolio.entity.UserDetailsInfo;
 import com.portfolio.services.LeadInfoService;
 import com.portfolio.services.ProjectsService;
 import com.portfolio.exceptionHandling.InvalidJwtException;
+import com.portfolio.exceptionHandling.NotFoundException;
 import com.portfolio.services.AuthService;
 import com.portfolio.services.UserService;
 import com.portfolio.utils.ResponseMessages;
+
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
+import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 
 @RestController
 @RequestMapping("/api/user")
@@ -54,11 +59,11 @@ public class UserController {
 	@Autowired
 	LeadInfoService leadInfoService;
 
+	 @Autowired
 	  private AuthService service;
 	  
-	  @Autowired
-	  private Validator validator;
-	  
+
+	
 	
 	@PostMapping("create_userdetails")
 	public ResponseEntity<StandardResponse> saveUserDetails( @RequestBody @Valid UserDetailsInfo userDetails) {
@@ -68,15 +73,14 @@ public class UserController {
 	
 	//update user details
 	@PutMapping("update_userdetails")
-	public ResponseEntity<StandardResponse> updateUserDetails(  @RequestBody @Valid UserDetails userDetails, BindingResult bindingResult){
+	public ResponseEntity<StandardResponse> updateUserDetails(  @RequestBody @Valid UserDetailsDto userDetails, BindingResult bindingResult) throws NotFoundException{
 		 if (bindingResult.hasErrors()) {
 			 System.out.println("errors exists");
 		 }
 		
-		StandardResponse<UserDetailsInfo> standardResponse = new StandardResponse<UserDetailsInfo>(userService.updateUserDetails(userDetails), ResponseMessages.UPDATE_MESSAGE, ResponseMessages.SUCCESS_MESSAGE);
+		StandardResponse<UserDetailsDto> standardResponse = new StandardResponse<UserDetailsDto>(userService.updateUserDetails(userDetails), ResponseMessages.UPDATE_MESSAGE, ResponseMessages.SUCCESS_MESSAGE);
 		return new ResponseEntity<>(standardResponse, HttpStatus.CREATED);
 		
-	
 	}
 
 	
@@ -84,7 +88,7 @@ public class UserController {
 	
 	@PostMapping("create_projectinfo")
 	@Validated(OnCreateGroupValidation.class)
-	public ResponseEntity<StandardResponse> saveProjectDetails( @RequestBody @Valid ProjectsDto projectDto) {
+	public ResponseEntity<StandardResponse> saveProjectDetails( @RequestBody @Valid ProjectsDto projectDto) throws NotFoundException{
 		StandardResponse<ProjectsDto> standardResponse = new StandardResponse<ProjectsDto>(projectsService.saveUpdateProjectDetails(projectDto), ResponseMessages.INSERT_MESSAGE, ResponseMessages.INSERT_CODE);
 		
 		return new ResponseEntity<>(standardResponse, HttpStatus.CREATED);
@@ -93,23 +97,40 @@ public class UserController {
 	//	Put mapping for saving the project details
 	@PutMapping("create_projectinfo")
 	@Validated(OnUpdateGroupValidation.class)
-	public ResponseEntity<StandardResponse> updateProjectDetails( @RequestBody @Valid ProjectsDto projectDto) {
+	public ResponseEntity<StandardResponse> updateProjectDetails( @RequestBody @Valid ProjectsDto projectDto) throws NotFoundException{
 		StandardResponse<ProjectsDto> standardResponse = new StandardResponse<ProjectsDto>(projectsService.saveUpdateProjectDetails(projectDto), ResponseMessages.INSERT_MESSAGE, ResponseMessages.INSERT_CODE);
 		return new ResponseEntity<>(standardResponse, HttpStatus.CREATED);
 	}
 	
+	@PostMapping("create_roles_and_responsibilites")
+	@Validated(OnCreateGroupValidation.class)
+	public ResponseEntity<StandardResponse> createRolesAndResponsibilites( @RequestBody @Valid RolesAndResponsibilitesDto rolesAndResponsibilitesDto) throws NotFoundException{
+		StandardResponse<RolesAndResponsibilitesDto> standardResponse = new StandardResponse<RolesAndResponsibilitesDto>(projectsService.createAndUpdateRoleAndResponsibility(rolesAndResponsibilitesDto), ResponseMessages.INSERT_MESSAGE, ResponseMessages.INSERT_CODE);
+		return new ResponseEntity<>(standardResponse, HttpStatus.CREATED);
+	
+	}
+	
+	@PutMapping("create_roles_and_responsibilites")
+	@Validated(OnUpdateGroupValidation.class)
+	public ResponseEntity<StandardResponse> updateRolesAndResponsibilites( @RequestBody @Valid RolesAndResponsibilitesDto rolesAndResponsibilitesDto) throws NotFoundException{
+		StandardResponse<RolesAndResponsibilitesDto> standardResponse = new StandardResponse<RolesAndResponsibilitesDto>(projectsService.createAndUpdateRoleAndResponsibility(rolesAndResponsibilitesDto), ResponseMessages.UPDATE_MESSAGE, ResponseMessages.SUCCESS);
+		
+		return new ResponseEntity<>(standardResponse, HttpStatus.OK);
+	}
+	
+	
 
 	@PostMapping("create_social_media")
 	@Validated(OnCreateGroupValidation.class)
-	public ResponseEntity<StandardResponse> createSocialMedia(@RequestBody @Valid SocialMediaDto socialMediaDto){
-		StandardResponse<SocialMedia> standardResponse = new StandardResponse<SocialMedia>(userService.createSocialMedia(socialMediaDto), ResponseMessages.INSERT_MESSAGE, ResponseMessages.INSERT_CODE);
+	public ResponseEntity<StandardResponse> createSocialMedia(@RequestBody @Valid SocialMediaDto socialMediaDto) throws NotFoundException{
+		StandardResponse<SocialMediaDto> standardResponse = new StandardResponse<SocialMediaDto>(userService.createSocialMedia(socialMediaDto), ResponseMessages.INSERT_MESSAGE, ResponseMessages.INSERT_CODE);
 		return new ResponseEntity<>(standardResponse, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("update_social_media")
 	@Validated(OnUpdateGroupValidation.class)
-	public ResponseEntity<StandardResponse> updateSocialMedia(@RequestBody @Valid SocialMediaDto socialMediaDto){
-		StandardResponse<SocialMedia> standardResponse = new StandardResponse<SocialMedia>(userService.createSocialMedia(socialMediaDto), ResponseMessages.UPDATE_MESSAGE, ResponseMessages.SUCCESS);
+	public ResponseEntity<StandardResponse> updateSocialMedia(@RequestBody @Valid SocialMediaDto socialMediaDto) throws NotFoundException{
+		StandardResponse<SocialMediaDto> standardResponse = new StandardResponse<SocialMediaDto>(userService.createSocialMedia(socialMediaDto), ResponseMessages.UPDATE_MESSAGE, ResponseMessages.SUCCESS);
 		return new ResponseEntity<>(standardResponse, HttpStatus.OK);
 	}
 	
@@ -132,10 +153,11 @@ public class UserController {
 
 	@PostMapping("education")
 	@Validated(OnCreateGroupValidation.class)
-	public ResponseEntity<StandardResponse> createEducation( @RequestBody @Valid EducationDto educationDto){
+	public ResponseEntity<StandardResponse> createEducation( @RequestBody @Valid EducationDto educationDto) throws NotFoundException {
 		//validating dates
 		DateRangeDto dateRangeDto = new DateRangeDto(educationDto.getStartDate(), educationDto.getEndDate());
-		
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
 		Set<ConstraintViolation<DateRangeDto>> violations = validator.validate(dateRangeDto);
 	    if (!violations.isEmpty()) {
 	        throw new ConstraintViolationException(violations);
@@ -147,8 +169,15 @@ public class UserController {
 	
 	@PutMapping("education")
 	@Validated(OnUpdateGroupValidation.class)
-	public ResponseEntity<StandardResponse> updateEducation( @RequestBody @Valid EducationDto educationDto){
+	public ResponseEntity<StandardResponse> updateEducation( @RequestBody @Valid EducationDto educationDto) throws NotFoundException{
 
+		DateRangeDto dateRangeDto = new DateRangeDto(educationDto.getStartDate(), educationDto.getEndDate());
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+		Set<ConstraintViolation<DateRangeDto>> violations = validator.validate(dateRangeDto);
+		  if (!violations.isEmpty()) {
+		        throw new ConstraintViolationException(violations);
+		      }
 		StandardResponse<EducationDto> standardResponse = new StandardResponse<EducationDto>(userService.createUpdateEducation(educationDto, "UPDATE"), ResponseMessages.UPDATE_MESSAGE, ResponseMessages.INSERT_CODE);
 		return new ResponseEntity<>(standardResponse, HttpStatus.CREATED);
 	}
@@ -170,15 +199,19 @@ public class UserController {
 	 }
 	 
 	 @PutMapping("update_password")
-	 public ResponseEntity<StandardResponse<String>> resetPassword( @RequestBody @Valid ResetPasswordDto resetPasswordDto, @RequestHeader("Authorization") @NotBlank String token) throws InvalidJwtException{
-		 //password Validation
+	 public ResponseEntity<StandardResponse<String>> resetPassword( @RequestBody @Valid ResetPasswordDto resetPasswordDto, @RequestHeader("Authorization") @NotBlank String token ) throws InvalidJwtException{
+		 
 		 CompareStringDto compareStringDto = new CompareStringDto(resetPasswordDto.getConfirmPassword(), resetPasswordDto.getNewPassword());
+		 ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		 Validator validator = factory.getValidator();
 		 Set<ConstraintViolation<CompareStringDto>> violations = validator.validate(compareStringDto);
+		
 		    if (!violations.isEmpty()) {
 		        throw new ConstraintViolationException(violations);
 		      }
-		 token = token.replace("Bearer ", "");
-		 StandardResponse<String> standardResponse = new StandardResponse<String>(service.resetPassword(token, resetPasswordDto),"User Logged out Sucessfully", ResponseMessages.SUCCESS);
+       		 token = token.replace("Bearer ", "");
+		   
+		 StandardResponse<String> standardResponse = new StandardResponse<String>(service.resetPassword(token, resetPasswordDto),"Update password done", ResponseMessages.SUCCESS);
 		 return new ResponseEntity<StandardResponse<String>>(standardResponse, HttpStatus.OK);
 	 }
 	 

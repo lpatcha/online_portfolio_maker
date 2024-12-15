@@ -18,11 +18,6 @@ private String description;
 @JoinColumn(name = "project_id")
 private Projects project;
 
-public RolesAndResponsibilites(String description, Projects project) {
-	super();
-	this.description = description;
-	this.project = project;
-}
 
 public int getId() {
 	return id;
@@ -47,9 +42,6 @@ public Projects getProject() {
 public void setProject(Projects project) {
 	this.project = project;
 }
-
-
-
 
 
 }

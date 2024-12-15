@@ -112,11 +112,7 @@ public class AuthServiceImpl implements AuthService, UserDetailsService{
 		// check for vaild old password 
 		String oldPassword = resetPasswordDto.getOldPassword();
 		BCryptPasswordEncoder b = new BCryptPasswordEncoder();
-		
-		
-		String encryptedPassword = new BCryptPasswordEncoder().encode(oldPassword);
 		String newEncryptedPassword = new BCryptPasswordEncoder().encode(resetPasswordDto.getNewPassword());
-		
 		User user = userDao.findUserByUserName(userName);
 		String accessToken;
 		// yes - reset password

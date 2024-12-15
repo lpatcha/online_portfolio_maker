@@ -1,5 +1,7 @@
 package com.portfolio.dto;
+import com.portfolio.customValidations.CompareStringValidation;
 
+@CompareStringValidation()
 public class CompareStringDto {
 	String firstString;
 	String secoundString;

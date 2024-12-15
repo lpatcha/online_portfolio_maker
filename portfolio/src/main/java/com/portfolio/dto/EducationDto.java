@@ -1,10 +1,11 @@
 package com.portfolio.dto;
 import java.sql.Date;
+
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
+
 
 public class EducationDto {
 
@@ -25,11 +26,9 @@ public class EducationDto {
  double maxCgpa;
  
  @Past
- @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$")
  Date startDate;
  
  @Past
- @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$")
  Date endDate;
  
  @Min(value = 1, message = "Userid cannot be null")

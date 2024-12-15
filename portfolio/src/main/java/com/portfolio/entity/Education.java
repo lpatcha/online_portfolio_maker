@@ -52,7 +52,7 @@ public class Education {
 		this.maxCgpa = maxCgpa;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.user = user;
+//		this.user = user;
 	}
 
 	public int getId() {
