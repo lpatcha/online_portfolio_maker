@@ -7,12 +7,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import com.auth0.jwt.interfaces.Payload;
-
 import jakarta.validation.Constraint;
 
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = DateRangeValidator.class)
+@Constraint(validatedBy = CompareStringValidator.class)
 @Documented
 public @interface CompareStringValidation {
 
@@ -20,3 +19,4 @@ public @interface CompareStringValidation {
 	Class<?>[] groups() default { };
 	Class<? extends Payload>[] payload() default { };
 }
+ 

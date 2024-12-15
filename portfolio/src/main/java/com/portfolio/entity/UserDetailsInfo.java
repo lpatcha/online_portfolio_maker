@@ -35,7 +35,7 @@ public class UserDetailsInfo {
 	@Column(name = "date_of_birth", columnDefinition = "DATE")
 	private String dateOfBirth;
 	
-	@OneToOne()
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 	

@@ -18,5 +18,9 @@ public interface UserDao {
 	Education createEducation(Education education);
 	int deleteEducationById(long id);
 	User updateUser(User user);
+	Education findEducationById(int id);
+	User publicFindUserById(int id);
+	UserDetailsInfo findUserDetailsByUser(User user);
+	
 	
 }

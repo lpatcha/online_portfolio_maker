@@ -2,6 +2,9 @@ package com.portfolio.dto;
 
 import java.sql.Date;
 
+import com.portfolio.customValidations.DateRangeValidation;
+
+@DateRangeValidation()
 public class DateRangeDto {
 		Date startDate;
 		Date endDate;

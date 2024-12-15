@@ -13,6 +13,5 @@ public interface ToolsAndTechnologiesDao {
 	
 	int deleteUserToolsAndTechnologies(long id);
 	
-
-
+	
 }

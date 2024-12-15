@@ -1,8 +1,6 @@
 package com.portfolio.services;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.portfolio.dao.CategoryDao;
 import com.portfolio.dao.ToolsAndTechnologiesDao;
 import com.portfolio.dao.UserDao;
@@ -13,6 +11,7 @@ import com.portfolio.entity.Categories;
 import com.portfolio.entity.ToolsAndTechnologies;
 import com.portfolio.entity.User;
 import com.portfolio.entity.UserToolsAndTechnologies;
+import com.portfolio.exceptionHandling.NotFoundException;
 
 import jakarta.transaction.Transactional;
 
@@ -31,48 +30,50 @@ public class ToolsAndTechnologiesServiceImpl implements ToolsAndTechnologiesServ
 	
 
 	@Override
+	@Transactional
 	public ToolsAndTechnologiesDto addToolsAndTechnologies(ToolsAndTechnologiesDto toolsAndTechnologiesDto) {
 	
-		
+		System.out.println("called");
 		ToolsAndTechnologies toolsAndTechnologies  = new ToolsAndTechnologies();
 		Categories category = categoryService.findCategoryById(toolsAndTechnologiesDto.getCategoryId());
+		CategoryDto categoryDto = new CategoryDto();
+		categoryDto.setId(category.getId());
+		categoryDto.setCategoryName(category.getCategoryName());
+		
+		if(toolsAndTechnologiesDto.getId() != 0)
+			toolsAndTechnologies.setId(toolsAndTechnologiesDto.getId());
+		
 		
 		toolsAndTechnologies.setName(toolsAndTechnologiesDto.getName());
 		toolsAndTechnologies.setCategory(category);
 		toolsAndTechnologiesDao.createToolsAndTechnologies(toolsAndTechnologies);
+		
 		toolsAndTechnologiesDto.setId(toolsAndTechnologies.getId());
+		toolsAndTechnologiesDto.setCategory(categoryDto);
+		
 		return toolsAndTechnologiesDto;
 	
 	}
 
-
-
-	@Override
-	public ToolsAndTechnologiesDto updateToolsAndTechologies(ToolsAndTechnologiesDto toolsAndTechnologiesDto) {
-		
-		ToolsAndTechnologies toolsAndTechnologies  = new ToolsAndTechnologies();
-		Categories category  = categoryService.findCategoryById(toolsAndTechnologiesDto.getCategoryId());
-		toolsAndTechnologies.setName(toolsAndTechnologiesDto.getName());
-		toolsAndTechnologies.setId(toolsAndTechnologiesDto.getId());
-		toolsAndTechnologies.setCategory(category);
-		toolsAndTechnologiesDao.createToolsAndTechnologies(toolsAndTechnologies);
-		return toolsAndTechnologiesDto;
-	}
 
 
 
 	@Override
 	public UserToolsAndTechnologiesDto createAndUpdateUserToolsAndTechnologies(
-			UserToolsAndTechnologiesDto userToolsAndTechnologiesDto, String type) {
+			UserToolsAndTechnologiesDto userToolsAndTechnologiesDto, String type) throws NotFoundException {
 		UserToolsAndTechnologies userToolsAndTechnologies = new UserToolsAndTechnologies();
 		userToolsAndTechnologies.setDescription(userToolsAndTechnologiesDto.getDescription());
 		userToolsAndTechnologies.setProficiencyRating(userToolsAndTechnologiesDto.getProficiencyRating());
 		if(type == "UPDATE")
 		{
+			if(toolsAndTechnologiesDao.getToolsAndTechnologiesById(userToolsAndTechnologiesDto.getToolId()) == null)
+				throw new NotFoundException("Tool with toolid: "+ userToolsAndTechnologiesDto.getToolId() + " is not found");
+			
 			userToolsAndTechnologies.setId(userToolsAndTechnologiesDto.getId());
 		}
-		
 		User user = userDao.findUserById(userToolsAndTechnologiesDto.getUserId());
+		if(user == null)
+			throw new NotFoundException("User with userId: "+ userToolsAndTechnologiesDto.getUserId() + " is not found");
 		
 		ToolsAndTechnologies toolsAndTechnologies = toolsAndTechnologiesDao.getToolsAndTechnologiesById(userToolsAndTechnologiesDto.getToolId());
 		userToolsAndTechnologies.setToolsAndTechnologies(toolsAndTechnologies);

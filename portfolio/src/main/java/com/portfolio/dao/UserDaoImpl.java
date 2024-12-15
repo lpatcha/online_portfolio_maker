@@ -1,5 +1,7 @@
 package com.portfolio.dao;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Repository;
 import com.portfolio.entity.Media;
 import com.portfolio.entity.SocialMedia;
@@ -8,7 +10,10 @@ import com.portfolio.entity.User;
 import com.portfolio.entity.UserDetailsInfo;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+
+import com.portfolio.exceptionHandling.IntegrityViolationException;
 import com.portfolio.exceptionHandling.InvalidJwtException;
+
 @Repository
 public class UserDaoImpl implements UserDao{
 	@Autowired
@@ -17,8 +22,15 @@ public class UserDaoImpl implements UserDao{
 	private MediaJpa mediaJpa;
 	@Autowired
 	private SocialMediaJpa socialMediaJpa;
+	
+	@Autowired
 	private EducationJpa educationJpa;
 	@Autowired UserJpa userJpa;
+	
+	@Autowired
+	private UserDetailsJpa userDetailsJpa;
+	
+	
 	@Override
 	@Transactional
 	public UserDetailsInfo saveUserDetails(UserDetailsInfo userDetails) {
@@ -83,7 +95,18 @@ public class UserDaoImpl implements UserDao{
 //	
 	@Override
 	public UserDetailsInfo updateUserDetails(UserDetailsInfo userDetailsInfo) {
-		return entityManager.merge(userDetailsInfo);
+		
+		try {
+			userDetailsInfo = entityManager.merge(userDetailsInfo);
+		}
+		
+		catch(ConstraintViolationException ex) {
+			throw new IntegrityViolationException("Please provide a unique email and phoneno");
+		}
+		
+		
+		return userDetailsInfo;
+		
 		
 	}
 
@@ -137,7 +160,32 @@ public class UserDaoImpl implements UserDao{
 	public User updateUser(User user) {
 		return userJpa.save(user);
 	}
+
+
+
+	@Override
+	public User publicFindUserById(int id) {
+		// TODO Auto-generated method stub
+		
+		
+		return userJpa.findAllUserDetails(id);
+//		return null;
+	}
+
+
+
+	@Override
+	public Education findEducationById(int id) {
+		// TODO Auto-generated method stub
+		
+		return educationJpa.findEducationById(id);
+	}
 	
+	
+	public UserDetailsInfo findUserDetailsByUser(User user) {
+		return userDetailsJpa.findByUser(user);
+	}
+
 	
 
 }

@@ -1,6 +1,7 @@
 package com.portfolio;
-import org.modelmapper.ModelMapper;
 
+
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -8,30 +9,26 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class PortfolioApplication {
+	
+	/**
+	 * 
+	 * Todo
+	 * 1. exception handling
+	 * 2. get user profile based on id
+	 * 
+	 * 
+	 * 
+	 */
 
 	public static void main(String[] args) {
 		SpringApplication.run(PortfolioApplication.class, args);
 	}
 	
-//	@Bean
-//	public CommandLineRunner commandLineRunner( CategoryService categoryService, UserDao userDao) {
-//		
-//		
-//		return runner -> {
-//			
-//			
-////			System.out.println("application started");
-////			System.out.println(userDao.findUserByUserName("lokeshp3098@gmail.com"));
-//     		//System.out.println(categoryService.findCategoryById(1));
-////			
-//			
-//		};
-//		
-//	}
+		@Bean
+	    public ModelMapper getModelMapper() {
+	        return new ModelMapper();
+	    }
 	
-//	@Bean()
-//	public ModelMapper getModelMapper() {
-//		return new ModelMapper();
-//	}
+
 	
 }

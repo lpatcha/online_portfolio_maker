@@ -97,8 +97,6 @@ public void checkForLogoutUser(String userName, String token) {
 }
 
 
-
-
 private Instant genAccessExpirationDate() {
     return LocalDateTime.now().plusHours(2).atZone(ZoneId.of("America/New_York")).toInstant();
   }

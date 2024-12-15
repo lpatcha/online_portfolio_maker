@@ -1,4 +1,5 @@
 package com.portfolio.dto;
+
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
@@ -16,6 +17,15 @@ public class UserToolsAndTechnologiesDto {
 	
 	String description;
 	
+	ToolsAndTechnologiesDto toolsAndTechnology;
+	
+	
+	public ToolsAndTechnologiesDto getToolsAndTechnology() {
+		return toolsAndTechnology;
+	}
+	public void setToolsAndTechnology(ToolsAndTechnologiesDto toolsAndTechnology) {
+		this.toolsAndTechnology = toolsAndTechnology;
+	}
 	@Min(value = 1, message = "toolId cannot be null")
 	int toolId;
 	

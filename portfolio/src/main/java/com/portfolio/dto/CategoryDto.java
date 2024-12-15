@@ -1,5 +1,4 @@
 package com.portfolio.dto;
-
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +11,16 @@ public class CategoryDto {
 	
 	@NotBlank
 	String categoryName;
-
+	
+	
+	public CategoryDto() {
+		
+	}
+	
+	public CategoryDto( int id, String categoryName) {
+		this.id = id;
+		this.categoryName = categoryName;
+	}
 	public String getCategoryName() {
 		return categoryName;
 	}

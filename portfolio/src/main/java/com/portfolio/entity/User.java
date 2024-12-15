@@ -22,7 +22,8 @@ private String password;
 
 
 @OneToMany(mappedBy = "user")
-private List<Education> education;
+public
+List<Education> education;
 
 @OneToMany(mappedBy = "user")
 private List<Projects> projects;

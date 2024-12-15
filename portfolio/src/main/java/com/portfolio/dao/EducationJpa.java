@@ -6,5 +6,5 @@ import com.portfolio.entity.Education;
 
 
 public interface EducationJpa  extends JpaRepository<Education, Long>{
-
+    Education findEducationById(int id);
 }
